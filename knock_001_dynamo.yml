@@ -1,0 +1,27 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: This is a simple DDB table.
+Resources:
+  AppTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: hk
+          AttributeType: S
+        - AttributeName: rk
+          AttributeType: S
+      BillingMode: PAY_PER_REQUEST
+      KeySchema:
+        - AttributeName: hk
+          KeyType: HASH
+        - AttributeName: rk
+          KeyType: RANGE
+      GlobalSecondaryIndexes:
+        - IndexName: reverse
+          KeySchema:
+            - AttributeName: rk
+              KeyType: HASH
+            - AttributeName: hk
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
